@@ -95,6 +95,11 @@ class Thread extends Eloquent
     {
         return $this->belongsToMany(Models::classname('User'), Models::table('participants'), 'thread_id', 'user_id');
     }
+    
+    public function getUsersExcludeUser($userid)
+    {
+         return $this->users()->where('user_id','!=', $userid)->get();
+    }
 
     /**
      * Returns the user object that created the thread.
