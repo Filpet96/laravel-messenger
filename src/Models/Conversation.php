@@ -210,7 +210,7 @@ class Conversation extends Eloquent
      */
     public function scopeBetween(Builder $query, array $participants)
     {
-        return $query->whereHas('participants', function (Builder $q) use ($participants) {
+        return $query->whereHas('conversation_participants', function (Builder $q) use ($participants) {
             $q->whereIn('user_id', $participants)
                 ->select($this->getConnection()->raw('DISTINCT(conversation_id)'))
                 ->groupBy('conversation_id')
