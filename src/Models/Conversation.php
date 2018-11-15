@@ -79,7 +79,7 @@ class Conversation extends Eloquent
      *
      * @codeCoverageIgnore
      */
-    public function participants()
+    public function conversation_participants()
     {
         return $this->hasMany(Models::classname(ConversationParticipant::class), 'conversation_id', 'id');
     }
