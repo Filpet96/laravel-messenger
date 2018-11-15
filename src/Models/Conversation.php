@@ -168,7 +168,7 @@ class Conversation extends Eloquent
      */
     public function scopeForUser(Builder $query, $userId)
     {
-        $participantsTable = Models::table('participants');
+        $participantsTable = Models::table('conversation_participants');
         $conversationsTable = Models::table('conversations');
 
         return $query->join($participantsTable, $this->getQualifiedKeyName(), '=', $participantsTable . '.conversation_id')
@@ -187,7 +187,7 @@ class Conversation extends Eloquent
      */
     public function scopeForUserWithNewMessages(Builder $query, $userId)
     {
-        $participantTable = Models::table('participants');
+        $participantTable = Models::table('conversation_participants');
         $conversationsTable = Models::table('conversations');
 
         return $query->join($participantTable, $this->getQualifiedKeyName(), '=', $participantTable . '.conversation_id')
@@ -210,7 +210,7 @@ class Conversation extends Eloquent
      */
     public function scopeBetween(Builder $query, array $participants)
     {
-        return $query->whereHas('participants', function (Builder $q) use ($participants) {
+        return $query->whereHas('conversation_participants', function (Builder $q) use ($participants) {
             $q->whereIn('user_id', $participants)
                 ->select($this->getConnection()->raw('DISTINCT(conversation_id)'))
                 ->groupBy('conversation_id')
@@ -328,7 +328,7 @@ class Conversation extends Eloquent
      */
     public function participantsString($userId = null, $columns = ['name'])
     {
-        $participantsTable = Models::table('participants');
+        $participantsTable = Models::table('conversation_participants');
         $usersTable = Models::table('users');
         $userPrimaryKey = Models::user()->getKeyName();
 
