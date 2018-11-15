@@ -78,7 +78,7 @@ class MessengerServiceProvider extends ServiceProvider
 
         Models::setTables([
             'messages' => $config->get('messenger.messages_table', Models::message()->getTable()),
-            'conversation_participants' => $config->get('messenger.conversation_participants_table', Models::participant()->getTable()),
+            'conversation_participants' => $config->get('messenger.conversation_participants_table', Models::conversationparticipant()->getTable()),
             'conversations' => $config->get('messenger.conversations_table', Models::conversation()->getTable()),
         ]);
     }
