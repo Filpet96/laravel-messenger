@@ -60,7 +60,7 @@ class Message extends Eloquent
         parent::__construct($attributes);
     }
     
-    public function getSentAgo() {
+    public function getSentAgoAttribute() {
         return Carbon::parse($this->created_at)->diffForHumans();
     }
 
