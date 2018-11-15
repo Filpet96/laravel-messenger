@@ -81,7 +81,7 @@ class Conversation extends Eloquent
      */
     public function participants()
     {
-        return $this->hasMany(Models::classname(ConversationParticipants::class), 'conversation_id', 'id');
+        return $this->hasMany(Models::classname(ConversationParticipant::class), 'conversation_id', 'id');
     }
 
     /**
