@@ -133,9 +133,9 @@ class Conversation extends Eloquent
      *
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public static function getBySubject($subject)
+    public static function getBySubject($conversation_name)
     {
-        return static::where('subject', 'like', $subject)->get();
+        return static::where('conversation_name', 'like', $conversation_name)->get();
     }
 
     /**

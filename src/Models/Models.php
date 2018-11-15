@@ -122,7 +122,7 @@ class Models
      * @param  array $attributes
      * @return \Cmgmyr\Messenger\Models\ConversationParticipant
      */
-    public static function participant(array $attributes = [])
+    public static function conversationparticipant(array $attributes = [])
     {
         return static::make(ConversationParticipant::class, $attributes);
     }
