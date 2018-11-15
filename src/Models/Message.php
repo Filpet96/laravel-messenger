@@ -29,7 +29,7 @@ class Message extends Eloquent
      *
      * @var array
      */
-    protected $fillable = ['thread_id', 'user_id', 'body'];
+    protected $fillable = ['conversation_id', 'user_id', 'body'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -57,7 +57,7 @@ class Message extends Eloquent
      */
     public function conversation()
     {
-        return $this->belongsTo(Models::classname(Conversation::class), 'thread_id', 'id');
+        return $this->belongsTo(Models::classname(Conversation::class), 'conversation_id', 'id');
     }
 
     /**
@@ -81,7 +81,7 @@ class Message extends Eloquent
      */
     public function participants()
     {
-        return $this->hasMany(Models::classname(ConversationParticipant::class), 'thread_id', 'thread_id');
+        return $this->hasMany(Models::classname(ConversationParticipant::class), 'conversation_id', 'conversation_id');
     }
 
     /**

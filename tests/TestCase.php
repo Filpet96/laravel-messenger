@@ -46,7 +46,7 @@ class TestCase extends Orchestra
     {
         $app['config']->set('messenger.message_model', 'Cmgmyr\Messenger\Models\Message');
         $app['config']->set('messenger.participant_model', 'Cmgmyr\Messenger\Models\ConversationParticipant');
-        $app['config']->set('messenger.thread_model', 'Cmgmyr\Messenger\Models\Conversation');
+        $app['config']->set('messenger.conversation_model', 'Cmgmyr\Messenger\Models\Conversation');
     }
 
     /**
@@ -134,7 +134,7 @@ class TestCase extends Orchestra
             'messages',
             function ($table) {
                 $table->increments('id');
-                $table->integer('thread_id')->unsigned();
+                $table->integer('conversation_id')->unsigned();
                 $table->integer('user_id')->unsigned();
                 $table->text('body');
                 $table->timestamps();
@@ -152,7 +152,7 @@ class TestCase extends Orchestra
             'participants',
             function ($table) {
                 $table->increments('id');
-                $table->integer('thread_id')->unsigned();
+                $table->integer('conversation_id')->unsigned();
                 $table->integer('user_id')->unsigned();
                 $table->timestamp('last_read')->nullable();
                 $table->timestamps();

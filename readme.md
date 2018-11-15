@@ -76,7 +76,7 @@ Create a `users` table if you do not have one already. If you need one, the defa
 ```php
 'messages_table' => 'messenger_messages',
 'participants_table' => 'messenger_participants',
-'threads_table' => 'messenger_threads',
+'conversations_table' => 'messenger_conversations',
 ```
     
 Publish migrations:

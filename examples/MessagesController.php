@@ -88,14 +88,14 @@ class MessagesController extends Controller
 
         // Message
         Message::create([
-            'thread_id' => $conversation->id,
+            'conversation_id' => $conversation->id,
             'user_id' => Auth::id(),
             'body' => $input['message'],
         ]);
 
         // Sender
         ConversationParticipant::create([
-            'thread_id' => $conversation->id,
+            'conversation_id' => $conversation->id,
             'user_id' => Auth::id(),
             'last_read' => new Carbon,
         ]);
@@ -128,14 +128,14 @@ class MessagesController extends Controller
 
         // Message
         Message::create([
-            'thread_id' => $conversation->id,
+            'conversation_id' => $conversation->id,
             'user_id' => Auth::id(),
             'body' => Input::get('message'),
         ]);
 
         // Add replier as a participant
         $participant = ConversationParticipant::firstOrCreate([
-            'thread_id' => $conversation->id,
+            'conversation_id' => $conversation->id,
             'user_id' => Auth::id(),
         ]);
         $participant->last_read = new Carbon;

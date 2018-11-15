@@ -21,7 +21,7 @@ class ConversationParticipant extends Eloquent
      *
      * @var array
      */
-    protected $fillable = ['thread_id', 'user_id', 'last_read'];
+    protected $fillable = ['conversation_id', 'user_id', 'last_read'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -49,7 +49,7 @@ class ConversationParticipant extends Eloquent
      */
     public function conversation()
     {
-        return $this->belongsTo(Models::classname(Conversation::class), 'thread_id', 'id');
+        return $this->belongsTo(Models::classname(Conversation::class), 'conversation_id', 'id');
     }
 
     /**

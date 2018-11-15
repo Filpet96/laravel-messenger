@@ -45,9 +45,9 @@ trait Messagable
     {
         return $this->belongsToMany(
             Models::classname(Conversation::class),
-            Models::table('participants'),
+            Models::table('conversation_participants'),
             'user_id',
-            'thread_id'
+            'conversation_id'
         );
     }
 
@@ -58,7 +58,7 @@ trait Messagable
      */
     public function newThreadsCount()
     {
-        return $this->threadsWithNewMessages()->count();
+        return $this->conversationsWithNewMessages()->count();
     }
 
     /**
@@ -76,7 +76,7 @@ trait Messagable
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function threadsWithNewMessages()
+    public function conversationsWithNewMessages()
     {
         return $this->conversations()
             ->where(function (Builder $q) {

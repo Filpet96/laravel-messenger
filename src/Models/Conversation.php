@@ -169,12 +169,12 @@ class Conversation extends Eloquent
     public function scopeForUser(Builder $query, $userId)
     {
         $participantsTable = Models::table('participants');
-        $threadsTable = Models::table('conversations');
+        $conversationsTable = Models::table('conversations');
 
-        return $query->join($participantsTable, $this->getQualifiedKeyName(), '=', $participantsTable . '.thread_id')
+        return $query->join($participantsTable, $this->getQualifiedKeyName(), '=', $participantsTable . '.conversation_id')
             ->where($participantsTable . '.user_id', $userId)
             ->where($participantsTable . '.deleted_at', null)
-            ->select($threadsTable . '.*');
+            ->select($conversationsTable . '.*');
     }
 
     /**
@@ -188,16 +188,16 @@ class Conversation extends Eloquent
     public function scopeForUserWithNewMessages(Builder $query, $userId)
     {
         $participantTable = Models::table('participants');
-        $threadsTable = Models::table('conversations');
+        $conversationsTable = Models::table('conversations');
 
-        return $query->join($participantTable, $this->getQualifiedKeyName(), '=', $participantTable . '.thread_id')
+        return $query->join($participantTable, $this->getQualifiedKeyName(), '=', $participantTable . '.conversation_id')
             ->where($participantTable . '.user_id', $userId)
             ->whereNull($participantTable . '.deleted_at')
-            ->where(function (Builder $query) use ($participantTable, $threadsTable) {
-                $query->where($threadsTable . '.updated_at', '>', $this->getConnection()->raw($this->getConnection()->getTablePrefix() . $participantTable . '.last_read'))
+            ->where(function (Builder $query) use ($participantTable, $conversationsTable) {
+                $query->where($conversationsTable . '.updated_at', '>', $this->getConnection()->raw($this->getConnection()->getTablePrefix() . $participantTable . '.last_read'))
                     ->orWhereNull($participantTable . '.last_read');
             })
-            ->select($threadsTable . '.*');
+            ->select($conversationsTable . '.*');
     }
 
     /**
@@ -212,9 +212,9 @@ class Conversation extends Eloquent
     {
         return $query->whereHas('participants', function (Builder $q) use ($participants) {
             $q->whereIn('user_id', $participants)
-                ->select($this->getConnection()->raw('DISTINCT(thread_id)'))
-                ->groupBy('thread_id')
-                ->havingRaw('COUNT(thread_id)=' . count($participants));
+                ->select($this->getConnection()->raw('DISTINCT(conversation_id)'))
+                ->groupBy('conversation_id')
+                ->havingRaw('COUNT(conversation_id)=' . count($participants));
         });
     }
 
@@ -232,7 +232,7 @@ class Conversation extends Eloquent
         collect($userIds)->each(function ($userId) {
             Models::participant()->firstOrCreate([
                 'user_id' => $userId,
-                'thread_id' => $this->id,
+                'conversation_id' => $this->id,
             ]);
         });
     }
@@ -248,7 +248,7 @@ class Conversation extends Eloquent
     {
         $userIds = is_array($userId) ? $userId : (array) func_get_args();
 
-        Models::participant()->where('thread_id', $this->id)->whereIn('user_id', $userIds)->delete();
+        Models::participant()->where('conversation_id', $this->id)->whereIn('user_id', $userIds)->delete();
     }
 
     /**
@@ -336,7 +336,7 @@ class Conversation extends Eloquent
 
         $participantNames = $this->getConnection()->table($usersTable)
             ->join($participantsTable, $usersTable . '.' . $userPrimaryKey, '=', $participantsTable . '.user_id')
-            ->where($participantsTable . '.thread_id', $this->id)
+            ->where($participantsTable . '.conversation_id', $this->id)
             ->select($this->getConnection()->raw($selectString));
 
         if ($userId !== null) {

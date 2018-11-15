@@ -29,7 +29,7 @@ class CustomModelsTest extends TestCase
     }
 
     /** @test */
-    public function it_can_use_custom_thread_model()
+    public function it_can_use_custom_conversation_model()
     {
         $this->setThreadCustomModel();
         $this->assertEquals(CustomThread::class, get_class(Models::conversation()));

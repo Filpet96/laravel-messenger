@@ -6,11 +6,11 @@ $faktory->define(['conversation', 'Cmgmyr\Messenger\Models\Conversation'], funct
 
 $faktory->define(['message', 'Cmgmyr\Messenger\Models\Message'], function ($f) {
     $f->user_id = 1;
-    $f->thread_id = 1;
+    $f->conversation_id = 1;
     $f->body = 'A message';
 });
 
 $faktory->define(['participant', 'Cmgmyr\Messenger\Models\ConversationParticipant'], function ($f) {
     $f->user_id = 1;
-    $f->thread_id = 1;
+    $f->conversation_id = 1;
 });
