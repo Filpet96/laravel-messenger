@@ -5,6 +5,8 @@ namespace Cmgmyr\Messenger\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
+
 
 class Message extends Eloquent
 {
@@ -37,6 +39,16 @@ class Message extends Eloquent
      * @var array
      */
     protected $dates = ['deleted_at'];
+    
+    
+    /**
+     * Appending attributes to a message.
+     *
+     * @var array
+     */
+    
+    protected $appends = ['sent_ago'];
+    
 
     /**
      * {@inheritDoc}
@@ -46,6 +58,10 @@ class Message extends Eloquent
         $this->table = Models::table('messages');
 
         parent::__construct($attributes);
+    }
+    
+    public function getSentAgo() {
+        return Carbon::parse($this->created_at)->diffForHumans();
     }
 
     /**
