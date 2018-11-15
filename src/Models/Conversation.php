@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Thread extends Eloquent
+class Conversation extends Eloquent
 {
     use SoftDeletes;
 
@@ -17,14 +17,14 @@ class Thread extends Eloquent
      *
      * @var string
      */
-    protected $table = 'threads';
+    protected $table = 'conversations';
 
     /**
      * The attributes that can be set with Mass Assignment.
      *
      * @var array
      */
-    protected $fillable = ['subject'];
+    protected $fillable = ['conversation_name'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -45,7 +45,7 @@ class Thread extends Eloquent
      */
     public function __construct(array $attributes = [])
     {
-        $this->table = Models::table('threads');
+        $this->table = Models::table('conversations');
 
         parent::__construct($attributes);
     }
@@ -59,11 +59,11 @@ class Thread extends Eloquent
      */
     public function messages()
     {
-        return $this->hasMany(Models::classname(Message::class), 'thread_id', 'id');
+        return $this->hasMany(Models::classname(Message::class), 'conversation_id', 'id');
     }
 
     /**
-     * Returns the latest message from a thread.
+     * Returns the latest message from a conversation.
      *
      * @return null|\Cmgmyr\Messenger\Models\Message
      */
@@ -73,7 +73,7 @@ class Thread extends Eloquent
     }
 
     /**
-     * Participants relationship.
+     * ConversationParticipants relationship.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      *
@@ -81,7 +81,7 @@ class Thread extends Eloquent
      */
     public function participants()
     {
-        return $this->hasMany(Models::classname(Participant::class), 'thread_id', 'id');
+        return $this->hasMany(Models::classname(ConversationParticipants::class), 'conversation_id', 'id');
     }
 
     /**
@@ -93,7 +93,7 @@ class Thread extends Eloquent
      */
     public function users()
     {
-        return $this->belongsToMany(Models::classname('User'), Models::table('participants'), 'thread_id', 'user_id');
+        return $this->belongsToMany(Models::classname('User'), Models::table('conversation_participants'), 'conversation_id', 'user_id');
     }
     
     public function getUsersExcludeUser($userid)
@@ -102,7 +102,7 @@ class Thread extends Eloquent
     }
 
     /**
-     * Returns the user object that created the thread.
+     * Returns the user object that created the conversation.
      *
      * @return Models::user()
      */
@@ -117,7 +117,7 @@ class Thread extends Eloquent
     }
 
     /**
-     * Returns all of the latest threads by updated_at date.
+     * Returns all of the latest conversations by updated_at date.
      *
      * @return \Illuminate\Database\Query\Builder|static
      */
@@ -127,7 +127,7 @@ class Thread extends Eloquent
     }
 
     /**
-     * Returns all threads by subject.
+     * Returns all conversations by subject.
      *
      * @param string $subject
      *
@@ -139,7 +139,7 @@ class Thread extends Eloquent
     }
 
     /**
-     * Returns an array of user ids that are associated with the thread.
+     * Returns an array of user ids that are associated with the conversation.
      *
      * @param null $userId
      *
@@ -159,7 +159,7 @@ class Thread extends Eloquent
     }
 
     /**
-     * Returns threads that the user is associated with.
+     * Returns conversations that the user is associated with.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param int $userId
@@ -169,7 +169,7 @@ class Thread extends Eloquent
     public function scopeForUser(Builder $query, $userId)
     {
         $participantsTable = Models::table('participants');
-        $threadsTable = Models::table('threads');
+        $threadsTable = Models::table('conversations');
 
         return $query->join($participantsTable, $this->getQualifiedKeyName(), '=', $participantsTable . '.thread_id')
             ->where($participantsTable . '.user_id', $userId)
@@ -178,7 +178,7 @@ class Thread extends Eloquent
     }
 
     /**
-     * Returns threads with new messages that the user is associated with.
+     * Returns conversations with new messages that the user is associated with.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param int $userId
@@ -188,7 +188,7 @@ class Thread extends Eloquent
     public function scopeForUserWithNewMessages(Builder $query, $userId)
     {
         $participantTable = Models::table('participants');
-        $threadsTable = Models::table('threads');
+        $threadsTable = Models::table('conversations');
 
         return $query->join($participantTable, $this->getQualifiedKeyName(), '=', $participantTable . '.thread_id')
             ->where($participantTable . '.user_id', $userId)
@@ -201,7 +201,7 @@ class Thread extends Eloquent
     }
 
     /**
-     * Returns threads between given user ids.
+     * Returns conversations between given user ids.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param array $participants
@@ -219,7 +219,7 @@ class Thread extends Eloquent
     }
 
     /**
-     * Add users to thread as participants.
+     * Add users to conversation as participants.
      *
      * @param array|mixed $userId
      *
@@ -238,7 +238,7 @@ class Thread extends Eloquent
     }
 
     /**
-     * Remove participants from thread.
+     * Remove participants from conversation.
      *
      * @param array|mixed $userId
      *
@@ -252,7 +252,7 @@ class Thread extends Eloquent
     }
 
     /**
-     * Mark a thread as read for a user.
+     * Mark a conversation as read for a user.
      *
      * @param int $userId
      *
@@ -270,7 +270,7 @@ class Thread extends Eloquent
     }
 
     /**
-     * See if the current thread is unread by the user.
+     * See if the current conversation is unread by the user.
      *
      * @param int $userId
      *
@@ -306,7 +306,7 @@ class Thread extends Eloquent
     }
 
     /**
-     * Restores all participants within a thread that has a new message.
+     * Restores all participants within a conversation that has a new message.
      *
      * @return void
      */
@@ -347,7 +347,7 @@ class Thread extends Eloquent
     }
 
     /**
-     * Checks to see if a user is a current participant of the thread.
+     * Checks to see if a user is a current participant of the conversation.
      *
      * @param int $userId
      *
@@ -395,7 +395,7 @@ class Thread extends Eloquent
     }
 
     /**
-     * Returns array of unread messages in thread for given user.
+     * Returns array of unread messages in conversation for given user.
      *
      * @param int $userId
      *
@@ -421,7 +421,7 @@ class Thread extends Eloquent
     }
 
     /**
-     * Returns count of unread messages in thread for given user.
+     * Returns count of unread messages in conversation for given user.
      *
      * @param int $userId
      *

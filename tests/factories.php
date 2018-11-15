@@ -1,7 +1,7 @@
 <?php
 
-$faktory->define(['thread', 'Cmgmyr\Messenger\Models\Thread'], function ($f) {
-    $f->subject = 'Sample thread';
+$faktory->define(['conversation', 'Cmgmyr\Messenger\Models\Conversation'], function ($f) {
+    $f->subject = 'Sample conversation';
 });
 
 $faktory->define(['message', 'Cmgmyr\Messenger\Models\Message'], function ($f) {
@@ -10,7 +10,7 @@ $faktory->define(['message', 'Cmgmyr\Messenger\Models\Message'], function ($f) {
     $f->body = 'A message';
 });
 
-$faktory->define(['participant', 'Cmgmyr\Messenger\Models\Participant'], function ($f) {
+$faktory->define(['participant', 'Cmgmyr\Messenger\Models\ConversationParticipant'], function ($f) {
     $f->user_id = 1;
     $f->thread_id = 1;
 });

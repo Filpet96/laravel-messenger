@@ -5,7 +5,7 @@ namespace Cmgmyr\Messenger\Models;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Participant extends Eloquent
+class ConversationParticipant extends Eloquent
 {
     use SoftDeletes;
 
@@ -41,15 +41,15 @@ class Participant extends Eloquent
     }
 
     /**
-     * Thread relationship.
+     * Conversation relationship.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      *
      * @codeCoverageIgnore
      */
-    public function thread()
+    public function conversation()
     {
-        return $this->belongsTo(Models::classname(Thread::class), 'thread_id', 'id');
+        return $this->belongsTo(Models::classname(Conversation::class), 'thread_id', 'id');
     }
 
     /**

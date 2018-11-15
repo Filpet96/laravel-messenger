@@ -45,8 +45,8 @@ class TestCase extends Orchestra
     protected function getEnvironmentSetUp($app)
     {
         $app['config']->set('messenger.message_model', 'Cmgmyr\Messenger\Models\Message');
-        $app['config']->set('messenger.participant_model', 'Cmgmyr\Messenger\Models\Participant');
-        $app['config']->set('messenger.thread_model', 'Cmgmyr\Messenger\Models\Thread');
+        $app['config']->set('messenger.participant_model', 'Cmgmyr\Messenger\Models\ConversationParticipant');
+        $app['config']->set('messenger.thread_model', 'Cmgmyr\Messenger\Models\Conversation');
     }
 
     /**
@@ -110,12 +110,12 @@ class TestCase extends Orchestra
     }
 
     /**
-     * Create the threads table in the database.
+     * Create the conversations table in the database.
      */
     private function createThreadsTable()
     {
         DB::schema()->create(
-            'threads',
+            'conversations',
             function ($table) {
                 $table->increments('id');
                 $table->string('subject');

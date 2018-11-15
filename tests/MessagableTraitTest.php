@@ -3,7 +3,7 @@
 namespace Cmgmyr\Messenger\Test;
 
 use Carbon\Carbon;
-use Cmgmyr\Messenger\Models\Thread;
+use Cmgmyr\Messenger\Models\Conversation;
 use Cmgmyr\Messenger\Traits\Messagable;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
@@ -26,15 +26,15 @@ class MessagableTraitTest extends TestCase
             ]
         );
 
-        $thread = $this->faktory->create('thread');
+        $conversation = $this->faktory->create('conversation');
         $user_1 = $this->faktory->build('participant', ['user_id' => $user->id, 'last_read' => Carbon::yesterday()]);
         $user_2 = $this->faktory->build('participant', ['user_id' => 2]);
-        $thread->participants()->saveMany([$user_1, $user_2]);
+        $conversation->participants()->saveMany([$user_1, $user_2]);
 
         $message_1 = $this->faktory->build('message', ['user_id' => 2]);
-        $thread->messages()->saveMany([$message_1]);
+        $conversation->messages()->saveMany([$message_1]);
 
-        $thread2 = $this->faktory->create('thread');
+        $thread2 = $this->faktory->create('conversation');
         $user_1b = $this->faktory->build('participant', ['user_id' => 3, 'last_read' => Carbon::yesterday()]);
         $user_2b = $this->faktory->build('participant', ['user_id' => 2]);
         $thread2->participants()->saveMany([$user_1b, $user_2b]);
@@ -42,8 +42,8 @@ class MessagableTraitTest extends TestCase
         $message_1b = $this->faktory->build('message', ['user_id' => 2]);
         $thread2->messages()->saveMany([$message_1b]);
 
-        $threads = $user->threadsWithNewMessages();
-        $this->assertEquals(1, $threads->first()->id);
+        $conversations = $user->threadsWithNewMessages();
+        $this->assertEquals(1, $conversations->first()->id);
 
         $this->assertEquals(1, $user->newThreadsCount());
     }
@@ -59,12 +59,12 @@ class MessagableTraitTest extends TestCase
             ]
         );
 
-        $thread_1 = $this->faktory->create('thread');
+        $thread_1 = $this->faktory->create('conversation');
         $participant_11 = $this->faktory->build('participant', ['user_id' => $user->id, 'last_read' => Carbon::now()->subDays(5)]);
         $participant_12 = $this->faktory->build('participant', ['user_id' => 2]);
         $thread_1->participants()->saveMany([$participant_11, $participant_12]);
 
-        $thread_2 = $this->faktory->create('thread');
+        $thread_2 = $this->faktory->create('conversation');
         $participant_21 = $this->faktory->build('participant', ['user_id' => 3, 'last_read' => Carbon::now()->subDays(5)]);
         $participant_22 = $this->faktory->build('participant', ['user_id' => 2]);
         $thread_2->participants()->saveMany([$participant_21, $participant_22]);
@@ -91,13 +91,13 @@ class MessagableTraitTest extends TestCase
                 'email' => 'jane@example.com',
             ]
         );
-        $thread = $this->faktory->create('thread');
+        $conversation = $this->faktory->create('conversation');
         $user_1 = $this->faktory->build('participant', ['user_id' => $user->id]);
         $user_2 = $this->faktory->build('participant', ['user_id' => 2]);
-        $thread->participants()->saveMany([$user_1, $user_2]);
+        $conversation->participants()->saveMany([$user_1, $user_2]);
 
-        $firstThread = $user->threads->first();
-        $this->assertInstanceOf(Thread::class, $firstThread);
+        $firstThread = $user->conversations->first();
+        $this->assertInstanceOf(Conversation::class, $firstThread);
     }
 }
 

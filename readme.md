@@ -15,15 +15,15 @@ This package will allow you to add a full user messaging system into your Larave
 ## Features
 * Multiple conversations per user
 * Optionally loop in additional users with each new message
-* View the last message for each thread available
+* View the last message for each conversation available
 * Returns either all messages in the system, all messages associated to the user, or all message associated to the user with new/unread messages
 * Return the users unread message count easily
 * Very flexible usage so you can implement your own access control
 
 ## Common uses
-* Open threads (everyone can see everything)
-* Group messaging (only participants can see their threads)
-* One to one messaging (private or direct thread)
+* Open conversations (everyone can see everything)
+* Group messaging (only participants can see their conversations)
+* One to one messaging (private or direct conversation)
 
 ## Installation (Laravel 4.x)
 Installation instructions for Laravel 4 can be [found here](https://github.com/cmgmyr/laravel-messenger/tree/v1).

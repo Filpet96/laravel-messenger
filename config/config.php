@@ -6,16 +6,16 @@ return [
 
     'message_model' => Cmgmyr\Messenger\Models\Message::class,
 
-    'participant_model' => Cmgmyr\Messenger\Models\Participant::class,
+    'conversation_participant_model' => Cmgmyr\Messenger\Models\ConversationParticipant::class,
 
-    'thread_model' => Cmgmyr\Messenger\Models\Thread::class,
+    'conversation_model' => Cmgmyr\Messenger\Models\Conversation::class,
 
     /**
      * Define custom database table names - without prefixes.
      */
     'messages_table' => null,
 
-    'participants_table' => null,
+    'conversation_participants_table' => null,
 
-    'threads_table' => null,
+    'conversations_table' => null,
 ];

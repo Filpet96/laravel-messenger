@@ -1,1 +1,1 @@
-<p>Sorry, no threads.</p>
+<p>Sorry, no conversations.</p>

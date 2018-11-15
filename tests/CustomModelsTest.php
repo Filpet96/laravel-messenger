@@ -4,8 +4,8 @@ namespace Cmgmyr\Messenger\Test;
 
 use Cmgmyr\Messenger\Models\Message;
 use Cmgmyr\Messenger\Models\Models;
-use Cmgmyr\Messenger\Models\Participant;
-use Cmgmyr\Messenger\Models\Thread;
+use Cmgmyr\Messenger\Models\ConversationParticipant;
+use Cmgmyr\Messenger\Models\Conversation;
 use Cmgmyr\Messenger\Test\Stubs\Models\CustomMessage;
 use Cmgmyr\Messenger\Test\Stubs\Models\CustomParticipant;
 use Cmgmyr\Messenger\Test\Stubs\Models\CustomThread;
@@ -32,7 +32,7 @@ class CustomModelsTest extends TestCase
     public function it_can_use_custom_thread_model()
     {
         $this->setThreadCustomModel();
-        $this->assertEquals(CustomThread::class, get_class(Models::thread()));
+        $this->assertEquals(CustomThread::class, get_class(Models::conversation()));
         $this->unsetThreadCustomModel();
     }
 
@@ -88,12 +88,12 @@ class CustomModelsTest extends TestCase
 
     protected function unsetParticipantCustomModel()
     {
-        Models::setParticipantModel(Participant::class);
+        Models::setParticipantModel(ConversationParticipant::class);
     }
 
     protected function unsetThreadCustomModel()
     {
-        Models::setThreadModel(Thread::class);
+        Models::setThreadModel(Conversation::class);
     }
 
     protected function setMessageCustomTable()

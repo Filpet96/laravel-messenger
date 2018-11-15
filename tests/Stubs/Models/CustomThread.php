@@ -2,9 +2,9 @@
 
 namespace Cmgmyr\Messenger\Test\Stubs\Models;
 
-use Cmgmyr\Messenger\Models\Thread;
+use Cmgmyr\Messenger\Models\Conversation;
 
-class CustomThread extends Thread
+class CustomThread extends Conversation
 {
     protected $table = 'custom_threads';
 }

@@ -22,7 +22,7 @@ class Message extends Eloquent
      *
      * @var array
      */
-    protected $touches = ['thread'];
+    protected $touches = ['conversation'];
 
     /**
      * The attributes that can be set with Mass Assignment.
@@ -49,15 +49,15 @@ class Message extends Eloquent
     }
 
     /**
-     * Thread relationship.
+     * Conversation relationship.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      *
      * @codeCoverageIgnore
      */
-    public function thread()
+    public function conversation()
     {
-        return $this->belongsTo(Models::classname(Thread::class), 'thread_id', 'id');
+        return $this->belongsTo(Models::classname(Conversation::class), 'thread_id', 'id');
     }
 
     /**
@@ -81,7 +81,7 @@ class Message extends Eloquent
      */
     public function participants()
     {
-        return $this->hasMany(Models::classname(Participant::class), 'thread_id', 'thread_id');
+        return $this->hasMany(Models::classname(ConversationParticipant::class), 'thread_id', 'thread_id');
     }
 
     /**
@@ -103,7 +103,7 @@ class Message extends Eloquent
      */
     public function scopeUnreadForUser(Builder $query, $userId)
     {
-        return $query->has('thread')
+        return $query->has('conversation')
             ->where('user_id', '!=', $userId)
             ->whereHas('participants', function (Builder $query) use ($userId) {
                 $query->where('user_id', $userId)

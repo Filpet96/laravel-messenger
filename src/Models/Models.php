@@ -26,7 +26,7 @@ class Models
     private static $userModelLookupKey = 'User';
 
     /**
-     * Set the model to be used for threads.
+     * Set the model to be used for conversations.
      *
      * @param string $model
      */
@@ -42,17 +42,17 @@ class Models
      */
     public static function setParticipantModel($model)
     {
-        static::$models[Participant::class] = $model;
+        static::$models[ConversationParticipant::class] = $model;
     }
 
     /**
-     * Set the model to be used for threads.
+     * Set the model to be used for conversations.
      *
      * @param  string $model
      */
     public static function setThreadModel($model)
     {
-        static::$models[Thread::class] = $model;
+        static::$models[Conversation::class] = $model;
     }
 
     /**
@@ -120,22 +120,22 @@ class Models
      * Get an instance of the participants model.
      *
      * @param  array $attributes
-     * @return \Cmgmyr\Messenger\Models\Participant
+     * @return \Cmgmyr\Messenger\Models\ConversationParticipant
      */
     public static function participant(array $attributes = [])
     {
-        return static::make(Participant::class, $attributes);
+        return static::make(ConversationParticipant::class, $attributes);
     }
 
     /**
-     * Get an instance of the threads model.
+     * Get an instance of the conversations model.
      *
      * @param  array $attributes
-     * @return \Cmgmyr\Messenger\Models\Thread
+     * @return \Cmgmyr\Messenger\Models\Conversation
      */
-    public static function thread(array $attributes = [])
+    public static function conversation(array $attributes = [])
     {
-        return static::make(Thread::class, $attributes);
+        return static::make(Conversation::class, $attributes);
     }
 
     /**

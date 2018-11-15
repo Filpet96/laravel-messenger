@@ -3,5 +3,5 @@
 @section('content')
     @include('messenger.partials.flash')
 
-    @each('messenger.partials.thread', $threads, 'thread', 'messenger.partials.no-threads')
+    @each('messenger.partials.conversation', $conversations, 'conversation', 'messenger.partials.no-conversations')
 @stop

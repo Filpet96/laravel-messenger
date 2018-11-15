@@ -1,16 +1,16 @@
-<?php $class = $thread->isUnread(Auth::id()) ? 'alert-info' : ''; ?>
+<?php $class = $conversation->isUnread(Auth::id()) ? 'alert-info' : ''; ?>
 
 <div class="media alert {{ $class }}">
     <h4 class="media-heading">
-        <a href="{{ route('messages.show', $thread->id) }}">{{ $thread->subject }}</a>
-        ({{ $thread->userUnreadMessagesCount(Auth::id()) }} unread)</h4>
+        <a href="{{ route('messages.show', $conversation->id) }}">{{ $conversation->subject }}</a>
+        ({{ $conversation->userUnreadMessagesCount(Auth::id()) }} unread)</h4>
     <p>
-        {{ $thread->latestMessage->body }}
+        {{ $conversation->latestMessage->body }}
     </p>
     <p>
-        <small><strong>Creator:</strong> {{ $thread->creator()->name }}</small>
+        <small><strong>Creator:</strong> {{ $conversation->creator()->name }}</small>
     </p>
     <p>
-        <small><strong>Participants:</strong> {{ $thread->participantsString(Auth::id()) }}</small>
+        <small><strong>Participants:</strong> {{ $conversation->participantsString(Auth::id()) }}</small>
     </p>
 </div>

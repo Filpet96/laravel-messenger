@@ -4,8 +4,8 @@ namespace Cmgmyr\Messenger;
 
 use Cmgmyr\Messenger\Models\Message;
 use Cmgmyr\Messenger\Models\Models;
-use Cmgmyr\Messenger\Models\Participant;
-use Cmgmyr\Messenger\Models\Thread;
+use Cmgmyr\Messenger\Models\ConversationParticipant;
+use Cmgmyr\Messenger\Models\Conversation;
 use Illuminate\Support\ServiceProvider;
 
 class MessengerServiceProvider extends ServiceProvider
@@ -73,13 +73,13 @@ class MessengerServiceProvider extends ServiceProvider
         $config = $this->app->make('config');
 
         Models::setMessageModel($config->get('messenger.message_model', Message::class));
-        Models::setThreadModel($config->get('messenger.thread_model', Thread::class));
-        Models::setParticipantModel($config->get('messenger.participant_model', Participant::class));
+        Models::setThreadModel($config->get('messenger.thread_model', Conversation::class));
+        Models::setParticipantModel($config->get('messenger.participant_model', ConversationParticipant::class));
 
         Models::setTables([
             'messages' => $config->get('messenger.messages_table', Models::message()->getTable()),
             'participants' => $config->get('messenger.participants_table', Models::participant()->getTable()),
-            'threads' => $config->get('messenger.threads_table', Models::thread()->getTable()),
+            'conversations' => $config->get('messenger.threads_table', Models::conversation()->getTable()),
         ]);
     }
 
