@@ -40,7 +40,7 @@ class Models
      *
      * @param  string $model
      */
-    public static function setParticipantModel($model)
+    public static function setConversationParticipantModel($model)
     {
         static::$models[ConversationParticipant::class] = $model;
     }
@@ -50,7 +50,7 @@ class Models
      *
      * @param  string $model
      */
-    public static function setThreadModel($model)
+    public static function setConversationModel($model)
     {
         static::$models[Conversation::class] = $model;
     }
