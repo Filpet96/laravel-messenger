@@ -14,7 +14,7 @@ class ConversationParticipant extends Eloquent
      *
      * @var string
      */
-    protected $table = 'converation_participants';
+    protected $table = 'conversation_participants';
 
     /**
      * The attributes that can be set with Mass Assignment.
@@ -35,7 +35,7 @@ class ConversationParticipant extends Eloquent
      */
     public function __construct(array $attributes = [])
     {
-        $this->table = Models::table('converation_participants');
+        $this->table = Models::table('conversation_participants');
 
         parent::__construct($attributes);
     }
