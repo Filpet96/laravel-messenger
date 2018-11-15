@@ -230,7 +230,7 @@ class Conversation extends Eloquent
         $userIds = is_array($userId) ? $userId : (array) func_get_args();
 
         collect($userIds)->each(function ($userId) {
-            Models::participant()->firstOrCreate([
+            Models::conversationparticipant()->firstOrCreate([
                 'user_id' => $userId,
                 'conversation_id' => $this->id,
             ]);
@@ -248,7 +248,7 @@ class Conversation extends Eloquent
     {
         $userIds = is_array($userId) ? $userId : (array) func_get_args();
 
-        Models::participant()->where('conversation_id', $this->id)->whereIn('user_id', $userIds)->delete();
+        Models::conversationparticipant()->where('conversation_id', $this->id)->whereIn('user_id', $userIds)->delete();
     }
 
     /**
