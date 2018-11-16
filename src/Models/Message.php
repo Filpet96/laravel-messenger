@@ -39,16 +39,20 @@ class Message extends Eloquent
      * @var array
      */
     protected $dates = ['deleted_at'];
-    
-    
+
+
     /**
      * Appending attributes to a message.
      *
      * @var array
      */
-    
+
     protected $appends = ['sent_ago'];
-    
+
+
+    protected $with = ['user'];
+
+
 
     /**
      * {@inheritDoc}
@@ -59,7 +63,7 @@ class Message extends Eloquent
 
         parent::__construct($attributes);
     }
-    
+
     public function getSentAgoAttribute() {
         return Carbon::parse($this->created_at)->diffForHumans();
     }
