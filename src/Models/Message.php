@@ -65,6 +65,7 @@ class Message extends Eloquent
     }
 
     public function getSentAgoAttribute() {
+        Carbon::setLocale('sv_SE');
         return Carbon::parse($this->created_at)->diffForHumans();
     }
 
