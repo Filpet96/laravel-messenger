@@ -19,7 +19,7 @@ class MessengerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        setlocale(LC_TIME, "sv_SE");
+        setlocale(LC_TIME, "Swedish");
         date_default_timezone_set('CET');
         Carbon::setLocale('sv');
 
