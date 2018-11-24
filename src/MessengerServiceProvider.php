@@ -19,10 +19,6 @@ class MessengerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        setlocale(LC_TIME, "Swedish");
-        date_default_timezone_set('CET');
-        Carbon::setLocale('sv');
-
         $this->offerPublishing();
         $this->setMessengerModels();
         $this->setUserModel();
