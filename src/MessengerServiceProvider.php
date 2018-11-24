@@ -6,6 +6,8 @@ use Cmgmyr\Messenger\Models\Message;
 use Cmgmyr\Messenger\Models\Models;
 use Cmgmyr\Messenger\Models\ConversationParticipant;
 use Cmgmyr\Messenger\Models\Conversation;
+use Carbon\Carbon;
+
 use Illuminate\Support\ServiceProvider;
 
 class MessengerServiceProvider extends ServiceProvider
@@ -17,6 +19,10 @@ class MessengerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        setlocale(LC_TIME, "sv_SE");
+        date_default_timezone_set('CET');
+        Carbon::setLocale('sv');
+
         $this->offerPublishing();
         $this->setMessengerModels();
         $this->setUserModel();
